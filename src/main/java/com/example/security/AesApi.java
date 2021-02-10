@@ -24,10 +24,15 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Component;
 
+import org.apache.commons.codec.binary.Hex;
+
 @Component
 public class AesApi {
 
 	private static Logger logger = LoggerFactory.getLogger(AesApi.class);
+	
+	
+	//Hex.encodeHexString( bytes )
 	
     public static SecretKey generateKey(int n) throws NoSuchAlgorithmException {
         KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
@@ -59,7 +64,16 @@ public class AesApi {
     	Cipher cipher = Cipher.getInstance(algorithm);
     	cipher.init(Cipher.ENCRYPT_MODE, key, iv);
     	byte[] cipherText = cipher.doFinal(input.getBytes());
-    	return Base64.getEncoder().encodeToString(cipherText);
+    	
+    	String cipherTextStr = Hex.encodeHexString(cipherText);
+    	logger.info("encrypt --> Hex version:  length = " + cipherTextStr.length() + ", value = " + cipherTextStr);
+    	
+    	String base64VersionTextStr = Base64.getEncoder().encodeToString(cipherText);
+
+    	logger.info("encrypt --> Base64 version:  length = " + base64VersionTextStr.length() + ", value = " + base64VersionTextStr);
+    	
+        return base64VersionTextStr;    	
+    	
     }
 
     public static String decrypt(String algorithm, String cipherText, SecretKey key, IvParameterSpec iv)
@@ -77,8 +91,17 @@ public class AesApi {
         InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.ENCRYPT_MODE, key, iv);
-        return Base64.getEncoder()
-            .encodeToString(cipher.doFinal(plainText.getBytes()));
+        byte[] cipherText = cipher.doFinal(plainText.getBytes());
+        
+    	String cipherTextStr = Hex.encodeHexString(cipherText);
+    	
+    	logger.info("encryptPasswordBased --> Hex version:  length = " + cipherTextStr.length() + ", value = " + cipherTextStr);
+        
+    	String base64VersionTextStr = Base64.getEncoder().encodeToString(cipherText);
+
+    	logger.info("encryptPasswordBased --> Base64 version:  length = " + base64VersionTextStr.length() + ", value = " + base64VersionTextStr);
+    	
+        return base64VersionTextStr;
     }
 
     public static String decryptPasswordBased(String cipherText, SecretKey key, IvParameterSpec iv)
