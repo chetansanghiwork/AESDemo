@@ -31,14 +31,11 @@ public class AesApi {
 
 	private static Logger logger = LoggerFactory.getLogger(AesApi.class);
 	
-	
-	//Hex.encodeHexString( bytes )
-	
     public static SecretKey generateKey(int n) throws NoSuchAlgorithmException {
         KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
         keyGenerator.init(n);
         SecretKey key = keyGenerator.generateKey();
-        logger.info("generateKey === " + key);
+//        logger.info("generateKey === " + key);
         return key;
     }
 
@@ -48,7 +45,7 @@ public class AesApi {
         KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 65536, 256);
         SecretKey secret = new SecretKeySpec(factory.generateSecret(spec)
             .getEncoded(), "AES");
-        logger.info("getKeyFromPassword === " + secret);
+//        logger.info("getKeyFromPassword === " + secret);
         return secret;
     }
 
@@ -65,8 +62,8 @@ public class AesApi {
     	cipher.init(Cipher.ENCRYPT_MODE, key, iv);
     	byte[] cipherText = cipher.doFinal(input.getBytes());
     	
-    	String cipherTextStr = Hex.encodeHexString(cipherText);
-    	logger.info("encrypt --> Hex version:  length = " + cipherTextStr.length() + ", value = " + cipherTextStr);
+//    	String cipherTextStr = Hex.encodeHexString(cipherText);
+//    	logger.info("encrypt --> Hex version:  length = " + cipherTextStr.length() + ", value = " + cipherTextStr);
     	
     	String base64VersionTextStr = Base64.getEncoder().encodeToString(cipherText);
 
@@ -93,9 +90,9 @@ public class AesApi {
         cipher.init(Cipher.ENCRYPT_MODE, key, iv);
         byte[] cipherText = cipher.doFinal(plainText.getBytes());
         
-    	String cipherTextStr = Hex.encodeHexString(cipherText);
-    	
-    	logger.info("encryptPasswordBased --> Hex version:  length = " + cipherTextStr.length() + ", value = " + cipherTextStr);
+//    	String cipherTextStr = Hex.encodeHexString(cipherText);
+//    	
+//    	logger.info("encryptPasswordBased --> Hex version:  length = " + cipherTextStr.length() + ", value = " + cipherTextStr);
         
     	String base64VersionTextStr = Base64.getEncoder().encodeToString(cipherText);
 
