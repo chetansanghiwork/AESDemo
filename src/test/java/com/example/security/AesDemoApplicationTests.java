@@ -17,7 +17,7 @@ class AesDemoApplicationTests {
 
 	@Test
 	void testAESEncryptAndDecryptUsingKeyFromPasswordAuthIdAndDC() throws Exception{
-			String plainText = "\"id\":\"123456789012\",\"dc\":\"1\"";
+			String plainText = "{\"id\":\"123456789012\",\"dc\":\"1\"}";
 			logger.info("testAESEncryptAndDecryptUsingKeyFromPasswordAuthIdAndDC --> plainText length === " + plainText.length());			
 			String password = "usingaes";
 			String salt = "12345678";
@@ -32,7 +32,7 @@ class AesDemoApplicationTests {
 
 	@Test
 	void testAESEncryptAndDecryptUsingKeyFromPasswordAuthIdAndDC2Characters() throws Exception{
-			String plainText = "\"id\":\"123456789012\",\"dc\":\"11\"";
+			String plainText = "{\"id\":\"123456789012\",\"dc\":\"11\"}";
 			logger.info("testAESEncryptAndDecryptUsingKeyFromPasswordAuthIdAndDC2Characters --> plainText length === " + plainText.length());			
 			String password = "usingaes";
 			String salt = "12345678";
@@ -49,7 +49,7 @@ class AesDemoApplicationTests {
 	
 	@Test	
 	void testAESEncryptAndDecryptAuthId13CharactersAndDC2Characters() throws Exception{
-		String plainText = "\"id\":\"1234567890123\",\"dc\":\"11\"";
+		String plainText = "{\"id\":\"1234567890123\",\"dc\":\"11\"}";
 		logger.info("testAESEncryptAndDecryptAuthId13CharactersAndDC2Characters --> plainText length === " + plainText.length());			
 		SecretKey key = AesApi.generateKey(128);
 		IvParameterSpec ivParameterSpec = AesApi.generateIv();
@@ -62,7 +62,7 @@ class AesDemoApplicationTests {
 	
 	@Test
 	void testAESEncryptAndDecryptUsingKeyFromPassword14CharactersAndDC2Characters() throws Exception{
-			String plainText = "\"id\":\"12345678901234\",\"dc\":\"11\"";
+			String plainText = "{\"id\":\"12345678901234\",\"dc\":\"11\"}";
 			logger.info("testAESEncryptAndDecryptUsingKeyFromPassword14CharactersAndDC2Characters --> plainText length === " + plainText.length());			
 			String password = "usingaes";
 			String salt = "12345678";
